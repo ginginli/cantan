@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Catan Board Generator - Create Balanced Settlers of Catan Maps</title>
+    <meta name="description" content="Free Catan generator for creating balanced Settlers of Catan boards. Generate fair maps for classic and expansion games with customizable rules.">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Catan Generator</h1>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#generator">Generator</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#what-is">What Is</a></li>
+                        <li><a href="#how-to">How To</a></li>
+                        <li><a href="#why">Why</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">The Ultimate Catan Board Generator</h2>
+                <p class="hero-subtitle">Create perfectly balanced Settlers of Catan maps in seconds. Our Catan generator ensures fair gameplay with customizable rules for classic and expansion boards.</p>
+                <a href="#generator" class="cta-button">Generate Board Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generator Section -->
+    <section id="generator" class="generator-section">
+        <div class="container">
+            <h2 class="section-title">Catan Generator</h2>
+            <p class="section-description">Use our Catan generator to create balanced game boards with custom rules. Perfect for both casual and competitive play.</p>
+            
+            <div class="generator-controls">
+                <div class="control-row">
+                    <label class="control-label">Board Type</label>
+                    <select id="board-type" class="control-select">
+                        <option value="classic" selected>Classic (3-4 Players)</option>
+                        <option value="expansion">Expansion (5-6 Players)</option>
+                    </select>
+                </div>
+                
+                <button id="options-btn" class="btn-secondary">Options</button>
+                <button id="generate-btn" class="btn-primary">Generate Board</button>
+            </div>
+
+            <div id="board-display" class="board-display">
+                <p class="board-placeholder">Click "Generate Board" to create your Catan map</p>
+            </div>
+
+            <!-- Options Panel -->
+            <div id="options-panel" class="options-panel hidden">
+                <h3>Generation Rules</h3>
+                <div class="options-grid">
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="opt-6-8" checked>
+                            Prevent 6 & 8 from touching
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="opt-2-12" checked>
+                            Prevent 2 & 12 from touching
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="opt-same-num">
+                            Prevent same numbers from touching
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="opt-same-res">
+                            Prevent same resources from touching
+                        </label>
+                    </div>
+                </div>
+                <button id="close-options" class="btn-secondary">Close</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Balanced Generation</h3>
+                    <p>Our Catan generator uses advanced algorithms to ensure every board is fair and balanced. No more arguments about unfair starting positions!</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Custom Rules</h3>
+                    <p>Configure the Catan generator with your house rules. Control whether high-value numbers can be adjacent and customize resource distribution.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Multiple Board Types</h3>
+                    <p>Generate boards for classic 3-4 player games or expansion 5-6 player games. Our Catan generator supports all standard configurations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Instant Results</h3>
+                    <p>Get your Catan board in seconds. No downloads, no registration - just click and play with our fast Catan generator.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Is Section -->
+    <section id="what-is" class="what-is-section">
+        <div class="container">
+            <h2 class="section-title">What Is a Catan Generator?</h2>
+            <div class="content-block">
+                <p>A Catan generator is a specialized tool designed to create randomized game boards for Settlers of Catan, one of the world's most popular board games. Instead of manually shuffling and placing hexagonal tiles and number tokens, a Catan generator automates this process while ensuring the board remains balanced and playable.</p>
+                
+                <p>The Catan generator takes into account various game rules and constraints to produce fair setups. It arranges terrain hexes (forests, pastures, fields, hills, mountains, and desert) and assigns number tokens (2-12) that determine resource production when dice are rolled. A good Catan generator prevents problematic configurations like having multiple high-probability numbers (6 and 8) clustered together, which could give certain players an unfair advantage.</p>
+                
+                <p>Using a Catan generator saves time during game setup and eliminates human bias in board creation. Whether you're playing with the base game or expansions, a Catan generator ensures every game starts with a well-balanced board that gives all players equal opportunities to succeed. This tool is especially valuable for competitive play, tournaments, or when you want to quickly start a new game without the tedious manual setup process.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How To Section -->
+    <section id="how-to" class="how-to-section">
+        <div class="container">
+            <h2 class="section-title">How To Use the Catan Generator</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Select Board Type</h3>
+                    <p>Choose between Classic (3-4 players) or Expansion (5-6 players) mode in the Catan generator. This determines the size and layout of your board.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Configure Options</h3>
+                    <p>Click the Options button to customize your Catan generator rules. Set preferences for number placement, resource distribution, and adjacency rules to match your house rules.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Generate Your Board</h3>
+                    <p>Click "Generate Board" and the Catan generator will create a balanced map instantly. If you don't like the result, simply generate again until you find the perfect setup.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Set Up and Play</h3>
+                    <p>Use the generated layout to set up your physical Catan board. Match the terrain hexes and number tokens to the Catan generator output and start playing!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section id="why" class="why-section">
+        <div class="container">
+            <h2 class="section-title">Why Use Our Catan Generator?</h2>
+            <div class="why-grid">
+                <div class="why-item">
+                    <h3>Save Time</h3>
+                    <p>Setting up a Catan board manually can take 5-10 minutes. Our Catan generator creates balanced boards in seconds, letting you start playing faster.</p>
+                </div>
+                <div class="why-item">
+                    <h3>Ensure Fairness</h3>
+                    <p>Random manual setup can create unbalanced boards. The Catan generator applies mathematical algorithms to ensure fair resource distribution and number placement.</p>
+                </div>
+                <div class="why-item">
+                    <h3>Eliminate Disputes</h3>
+                    <p>When players set up the board, accusations of bias can arise. Using a Catan generator provides an impartial, algorithmic setup that everyone can trust.</p>
+                </div>
+                <div class="why-item">
+                    <h3>Learn Strategy</h3>
+                    <p>By generating multiple boards with the Catan generator, you can study different configurations and improve your strategic thinking for various board layouts.</p>
+                </div>
+                <div class="why-item">
+                    <h3>Perfect for Tournaments</h3>
+                    <p>Competitive Catan requires standardized, balanced boards. Our Catan generator is ideal for tournament organizers who need fair setups for all matches.</p>
+                </div>
+                <div class="why-item">
+                    <h3>Free and Easy</h3>
+                    <p>No downloads, no registration, no cost. Our Catan generator is completely free to use and works directly in your browser on any device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>What is a Catan generator?</h3>
+                    <p>A Catan generator is an automated tool that creates randomized, balanced game boards for Settlers of Catan. It arranges terrain hexes and number tokens according to game rules and optional custom constraints to ensure fair gameplay.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is this Catan generator free to use?</h3>
+                    <p>Yes! Our Catan generator is completely free with no registration required. You can generate unlimited boards for your games.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Does the Catan generator work for expansion boards?</h3>
+                    <p>Absolutely. Our Catan generator supports both classic 3-4 player boards and expansion 5-6 player boards. Simply select your preferred board type before generating.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I customize the generation rules?</h3>
+                    <p>Yes! The Catan generator includes options to prevent high-value numbers from touching, control same-resource adjacency, and other customizable rules to match your preferences.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How does the Catan generator ensure balanced boards?</h3>
+                    <p>Our Catan generator uses algorithms that evaluate board fairness based on number distribution, resource variety, and probability calculations. It prevents problematic configurations that could give unfair advantages.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I save or print the generated boards?</h3>
+                    <p>You can take a screenshot of the generated board or use your browser's print function to save the layout for future reference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Catan Generator. All rights reserved.</p>
+                <p>Settlers of Catan is a trademark of Catan GmbH. This Catan generator is an unofficial fan-made tool.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>
