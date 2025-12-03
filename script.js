@@ -125,77 +125,99 @@ function isValidBoard(tiles) {
 function displayBoard(tiles, isExpansion) {
     const boardDisplay = document.getElementById('board-display');
     boardDisplay.innerHTML = '';
-    boardDisplay.style.display = 'grid';
-    boardDisplay.style.gap = '10px';
-    boardDisplay.style.padding = '2rem';
+    boardDisplay.className = 'board-display hexagon-board';
     
-    if (isExpansion) {
-        boardDisplay.style.gridTemplateColumns = 'repeat(5, 1fr)';
-    } else {
-        boardDisplay.style.gridTemplateColumns = 'repeat(4, 1fr)';
-    }
+    // Classic Catan board layout (19 hexes in specific pattern)
+    // Row structure: 3-4-5-4-3
+    const classicLayout = [
+        { row: 0, count: 3, offset: 2 },
+        { row: 1, count: 4, offset: 1.5 },
+        { row: 2, count: 5, offset: 1 },
+        { row: 3, count: 4, offset: 1.5 },
+        { row: 4, count: 3, offset: 2 }
+    ];
     
-    tiles.forEach((tile, index) => {
-        const tileElement = document.createElement('div');
-        tileElement.className = 'tile';
-        tileElement.style.cssText = `
-            background-color: ${TERRAIN_TYPES[tile.terrain].color};
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            min-height: 100px;
+    // Expansion board layout (30 hexes)
+    // Row structure: 4-5-6-5-6-4
+    const expansionLayout = [
+        { row: 0, count: 4, offset: 2 },
+        { row: 1, count: 5, offset: 1.5 },
+        { row: 2, count: 6, offset: 1 },
+        { row: 3, count: 5, offset: 1.5 },
+        { row: 4, count: 6, offset: 1 },
+        { row: 5, count: 4, offset: 2 }
+    ];
+    
+    const layout = isExpansion ? expansionLayout : classicLayout;
+    let tileIndex = 0;
+    
+    layout.forEach(rowData => {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'hex-row';
+        rowDiv.style.cssText = `
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: center;
+            margin-left: ${rowData.offset * 45}px;
         `;
         
-        const terrainName = document.createElement('div');
-        terrainName.textContent = TERRAIN_TYPES[tile.terrain].name;
-        terrainName.style.fontSize = '0.9rem';
-        terrainName.style.marginBottom = '0.5rem';
-        
-        const numberElement = document.createElement('div');
-        if (tile.number) {
-            numberElement.textContent = tile.number;
-            numberElement.style.cssText = `
-                font-size: 2rem;
-                font-weight: 700;
-                background-color: rgba(255,255,255,0.9);
-                color: #333;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto;
-            `;
+        for (let i = 0; i < rowData.count && tileIndex < tiles.length; i++) {
+            const tile = tiles[tileIndex++];
+            const hexContainer = document.createElement('div');
+            hexContainer.className = 'hex-container';
             
-            // Highlight high-probability numbers
-            if (tile.number === 6 || tile.number === 8) {
-                numberElement.style.backgroundColor = '#ff6b6b';
-                numberElement.style.color = 'white';
+            const hexagon = document.createElement('div');
+            hexagon.className = 'hexagon';
+            hexagon.style.backgroundColor = TERRAIN_TYPES[tile.terrain].color;
+            
+            const hexContent = document.createElement('div');
+            hexContent.className = 'hex-content';
+            
+            const terrainName = document.createElement('div');
+            terrainName.className = 'terrain-name';
+            terrainName.textContent = TERRAIN_TYPES[tile.terrain].name;
+            
+            if (tile.number) {
+                const numberElement = document.createElement('div');
+                numberElement.className = 'number-token';
+                numberElement.textContent = tile.number;
+                
+                // Highlight high-probability numbers
+                if (tile.number === 6 || tile.number === 8) {
+                    numberElement.classList.add('high-probability');
+                }
+                
+                // Add dots for probability
+                const dots = getProbabilityDots(tile.number);
+                const dotsElement = document.createElement('div');
+                dotsElement.className = 'probability-dots';
+                dotsElement.textContent = dots;
+                numberElement.appendChild(dotsElement);
+                
+                hexContent.appendChild(numberElement);
             }
+            
+            const resourceElement = document.createElement('div');
+            resourceElement.className = 'resource-name';
+            resourceElement.textContent = TERRAIN_TYPES[tile.terrain].resource;
+            
+            hexContent.appendChild(terrainName);
+            hexContent.appendChild(resourceElement);
+            
+            hexagon.appendChild(hexContent);
+            hexContainer.appendChild(hexagon);
+            rowDiv.appendChild(hexContainer);
         }
         
-        const resourceElement = document.createElement('div');
-        resourceElement.textContent = TERRAIN_TYPES[tile.terrain].resource;
-        resourceElement.style.fontSize = '0.8rem';
-        resourceElement.style.marginTop = '0.5rem';
-        resourceElement.style.opacity = '0.9';
-        
-        tileElement.appendChild(terrainName);
-        if (tile.number) {
-            tileElement.appendChild(numberElement);
-        }
-        tileElement.appendChild(resourceElement);
-        
-        boardDisplay.appendChild(tileElement);
+        boardDisplay.appendChild(rowDiv);
     });
+}
+
+function getProbabilityDots(number) {
+    const probabilities = {
+        2: '•', 3: '••', 4: '•••', 5: '••••', 6: '•••••',
+        8: '•••••', 9: '••••', 10: '•••', 11: '••', 12: '•'
+    };
+    return probabilities[number] || '';
 }
 
 // Smooth scrolling for navigation
