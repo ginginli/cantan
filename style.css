@@ -275,15 +275,15 @@ section {
 }
 
 .board-display {
-    min-height: 400px;
-    background: linear-gradient(135deg, #e8d5b7 0%, #d4c4a8 100%);
+    min-height: 500px;
+    background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 100%);
     border: 4px solid var(--wood-color);
     border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.5), 0 4px 15px rgba(0, 0, 0, 0.3);
     padding: 3rem 2rem;
 }
 
@@ -305,8 +305,8 @@ section {
 
 .hex-row {
     display: flex;
-    gap: 5px;
-    margin-bottom: -25px;
+    gap: 2px;
+    margin-bottom: -28px;
 }
 
 .hex-container {
@@ -321,7 +321,7 @@ section {
     background-color: #64C7CC;
     position: relative;
     margin: 26px 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 4px #2c2c2c, 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .hexagon:before,
@@ -332,6 +332,7 @@ section {
     border-left: 45px solid transparent;
     border-right: 45px solid transparent;
     left: 0;
+    box-shadow: 0 0 0 4px #2c2c2c;
 }
 
 .hexagon:before {
@@ -344,6 +345,10 @@ section {
     top: 100%;
     border-top: 26px solid;
     border-top-color: inherit;
+}
+
+.hexagon.ocean-tile {
+    opacity: 0.8;
 }
 
 .hex-content {
@@ -371,33 +376,38 @@ section {
 }
 
 .number-token {
-    width: 35px;
-    height: 35px;
-    background-color: rgba(250, 246, 237, 0.95);
-    color: #3d2817;
+    width: 38px;
+    height: 38px;
+    background-color: #f5e6d3;
+    color: #2c2c2c;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    border: 3px solid var(--wood-color);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+    border: 3px solid #8b6f47;
     margin: 2px 0;
 }
 
 .number-token.high-probability {
-    background-color: #ff6b6b;
-    color: white;
-    border-color: #c92a2a;
+    color: #d32f2f;
+    background-color: #f5e6d3;
+    border-color: #8b6f47;
 }
 
 .probability-dots {
-    font-size: 0.5rem;
-    line-height: 0.6;
-    margin-top: -2px;
-    letter-spacing: 1px;
+    font-size: 0.45rem;
+    line-height: 0.5;
+    margin-top: -3px;
+    letter-spacing: 0.5px;
+    color: #2c2c2c;
+}
+
+.high-probability .probability-dots {
+    color: #d32f2f;
 }
 
 .resource-name {

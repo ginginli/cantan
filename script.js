@@ -2,11 +2,12 @@
 
 const TERRAIN_TYPES = {
     FOREST: { name: 'Forest', color: '#2d5016', resource: 'Wood' },
-    PASTURE: { name: 'Pasture', color: '#90ee90', resource: 'Sheep' },
+    PASTURE: { name: 'Pasture', color: '#7cb342', resource: 'Sheep' },
     FIELD: { name: 'Field', color: '#f4d03f', resource: 'Wheat' },
     HILL: { name: 'Hill', color: '#cd853f', resource: 'Brick' },
-    MOUNTAIN: { name: 'Mountain', color: '#808080', resource: 'Ore' },
-    DESERT: { name: 'Desert', color: '#f5deb3', resource: 'None' }
+    MOUNTAIN: { name: 'Mountain', color: '#9e9e9e', resource: 'Ore' },
+    DESERT: { name: 'Desert', color: '#f5deb3', resource: 'None' },
+    OCEAN: { name: 'Ocean', color: '#2196f3', resource: '' }
 };
 
 const CLASSIC_TERRAIN = [
@@ -127,28 +128,30 @@ function displayBoard(tiles, isExpansion) {
     boardDisplay.innerHTML = '';
     boardDisplay.className = 'board-display hexagon-board';
     
-    // Classic Catan board layout (19 hexes in specific pattern)
-    // Row structure: 3-4-5-4-3
-    const classicLayout = [
-        { row: 0, count: 3, offset: 2 },
-        { row: 1, count: 4, offset: 1.5 },
-        { row: 2, count: 5, offset: 1 },
-        { row: 3, count: 4, offset: 1.5 },
-        { row: 4, count: 3, offset: 2 }
+    // Classic Catan board layout with ocean border
+    // Ocean border + land tiles
+    const classicLayoutWithOcean = [
+        { row: 0, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }], offset: 1 },
+        { row: 1, tiles: [{ type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }, { type: 'ocean' }], offset: 0.5 },
+        { row: 2, tiles: [{ type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }, { type: 'ocean' }], offset: 0 },
+        { row: 3, tiles: [{ type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }], offset: 0.5 },
+        { row: 4, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }], offset: 0 },
+        { row: 5, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }], offset: 0.5 },
+        { row: 6, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }], offset: 1 }
     ];
     
-    // Expansion board layout (30 hexes)
-    // Row structure: 4-5-6-5-6-4
-    const expansionLayout = [
-        { row: 0, count: 4, offset: 2 },
-        { row: 1, count: 5, offset: 1.5 },
-        { row: 2, count: 6, offset: 1 },
-        { row: 3, count: 5, offset: 1.5 },
-        { row: 4, count: 6, offset: 1 },
-        { row: 5, count: 4, offset: 2 }
+    const expansionLayoutWithOcean = [
+        { row: 0, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }], offset: 1.5 },
+        { row: 1, tiles: [{ type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }, { type: 'ocean' }], offset: 1 },
+        { row: 2, tiles: [{ type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }, { type: 'ocean' }], offset: 0.5 },
+        { row: 3, tiles: [{ type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }], offset: 1 },
+        { row: 4, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }], offset: 0.5 },
+        { row: 5, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }], offset: 1 },
+        { row: 6, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'land' }, { type: 'ocean' }], offset: 0.5 },
+        { row: 7, tiles: [{ type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }, { type: 'ocean' }], offset: 1.5 }
     ];
     
-    const layout = isExpansion ? expansionLayout : classicLayout;
+    const layout = isExpansion ? expansionLayoutWithOcean : classicLayoutWithOcean;
     let tileIndex = 0;
     
     layout.forEach(rowData => {
@@ -160,53 +163,47 @@ function displayBoard(tiles, isExpansion) {
             margin-left: ${rowData.offset * 45}px;
         `;
         
-        for (let i = 0; i < rowData.count && tileIndex < tiles.length; i++) {
-            const tile = tiles[tileIndex++];
+        rowData.tiles.forEach(tileType => {
             const hexContainer = document.createElement('div');
             hexContainer.className = 'hex-container';
             
             const hexagon = document.createElement('div');
             hexagon.className = 'hexagon';
-            hexagon.style.backgroundColor = TERRAIN_TYPES[tile.terrain].color;
             
-            const hexContent = document.createElement('div');
-            hexContent.className = 'hex-content';
-            
-            const terrainName = document.createElement('div');
-            terrainName.className = 'terrain-name';
-            terrainName.textContent = TERRAIN_TYPES[tile.terrain].name;
-            
-            if (tile.number) {
-                const numberElement = document.createElement('div');
-                numberElement.className = 'number-token';
-                numberElement.textContent = tile.number;
+            if (tileType.type === 'ocean') {
+                hexagon.style.backgroundColor = TERRAIN_TYPES.OCEAN.color;
+                hexagon.classList.add('ocean-tile');
+            } else {
+                const tile = tiles[tileIndex++];
+                hexagon.style.backgroundColor = TERRAIN_TYPES[tile.terrain].color;
                 
-                // Highlight high-probability numbers
-                if (tile.number === 6 || tile.number === 8) {
-                    numberElement.classList.add('high-probability');
+                const hexContent = document.createElement('div');
+                hexContent.className = 'hex-content';
+                
+                if (tile.number) {
+                    const numberElement = document.createElement('div');
+                    numberElement.className = 'number-token';
+                    numberElement.textContent = tile.number;
+                    
+                    if (tile.number === 6 || tile.number === 8) {
+                        numberElement.classList.add('high-probability');
+                    }
+                    
+                    const dots = getProbabilityDots(tile.number);
+                    const dotsElement = document.createElement('div');
+                    dotsElement.className = 'probability-dots';
+                    dotsElement.textContent = dots;
+                    numberElement.appendChild(dotsElement);
+                    
+                    hexContent.appendChild(numberElement);
                 }
                 
-                // Add dots for probability
-                const dots = getProbabilityDots(tile.number);
-                const dotsElement = document.createElement('div');
-                dotsElement.className = 'probability-dots';
-                dotsElement.textContent = dots;
-                numberElement.appendChild(dotsElement);
-                
-                hexContent.appendChild(numberElement);
+                hexagon.appendChild(hexContent);
             }
             
-            const resourceElement = document.createElement('div');
-            resourceElement.className = 'resource-name';
-            resourceElement.textContent = TERRAIN_TYPES[tile.terrain].resource;
-            
-            hexContent.appendChild(terrainName);
-            hexContent.appendChild(resourceElement);
-            
-            hexagon.appendChild(hexContent);
             hexContainer.appendChild(hexagon);
             rowDiv.appendChild(hexContainer);
-        }
+        });
         
         boardDisplay.appendChild(rowDiv);
     });
